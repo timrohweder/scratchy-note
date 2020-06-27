@@ -19,14 +19,14 @@ chrome.storage.sync.get(
   }
 );
 
-const background = chrome.extension.getBackgroundPage();
-
-window.addEventListener(
-  "unload",
-  function (e) {
-    let text = textarea.value;
-    background.writeNoteToStorage(text);
-    text ? background.setIconToActive() : background.setIconToInactive();
-  },
-  true
-);
+chrome.runtime.getBackgroundPage((background) => {
+  window.addEventListener(
+    "unload",
+    function (e) {
+      let text = textarea.value;
+      background.writeNoteToStorage(text);
+      text ? background.setIconToActive() : background.setIconToInactive();
+    },
+    true
+  );
+});
