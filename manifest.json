@@ -3,6 +3,10 @@
   "name": "Scratchy Note",
   "version": "1.0.0",
   "permissions": ["storage"],
+  "omnibox": { "keyword": "sn" },
+  "icons": {
+    "16": "images/note-icon16.png"
+  },
   "browser_action": {
     "default_icon": {
       "16": "images/note-icon16.png",

@@ -1,6 +1,5 @@
 chrome.storage.sync.get((result) => {
   result["note"] ? setIconToActive() : setIconToInactive();
-  console.log(result["note"]);
 });
 
 function writeNoteToStorage(v) {
@@ -22,3 +21,22 @@ function setIconToInactive() {
     },
   });
 }
+
+const suggestion = {
+  description: "Append to your scratch pad",
+};
+
+chrome.omnibox.setDefaultSuggestion(suggestion);
+
+chrome.omnibox.onInputEntered.addListener(function (text) {
+  if (!text) return;
+  setIconToActive();
+  chrome.storage.sync.get((result) => {
+    let note = result["note"];
+    if (!note) {
+      writeNoteToStorage(text);
+    } else {
+      writeNoteToStorage((note += `\n${text}`));
+    }
+  });
+});
